@@ -1,5 +1,0 @@
-
-enum TYPE {
-	SNAKE, LADDER;
-
-}

@@ -28,4 +28,15 @@ public enum HashGameMap implements GameMap {
 		return this.elements.get(pos);
 	}
 
+	
+	public static void main(String ... args) {
+		System.out.print(HashGameMap.INSTANCE);
+		Snake e= new Snake();
+		e.setTop(13);
+		e.setBottom(15);
+		HashGameMap.INSTANCE.addNewElement(e);
+		
+		Element el= HashGameMap.INSTANCE.getElementIn(13);
+		System.out.println(el.getActionPoint());
+	}
 }

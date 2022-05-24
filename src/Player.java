@@ -4,6 +4,7 @@ class Player {
 	private int lastPos; //posizione precedente
 	private int cardinal; //posizione cardinale
 	private int lastScore;
+	private int roundsToWait;
 	
 	private boolean noStopCard;
 	
@@ -11,6 +12,7 @@ class Player {
 		currPos=1;
 		noStopCard=false;
 		lastPos=0;
+		roundsToWait=0;
 	}
 	
 	public boolean hasNoStopCard() {return noStopCard;}
@@ -63,6 +65,14 @@ class Player {
 
 	public void setLastScore(int lastScore) {
 		this.lastScore = lastScore;
+	}
+
+	public int getRoundsToWait() {
+		return roundsToWait;
+	}
+
+	public void setRoundsToWait(int roundsToWait) {
+		this.roundsToWait = roundsToWait;
 	}
 	
 	

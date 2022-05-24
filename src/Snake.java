@@ -13,7 +13,6 @@ class Snake extends Mover implements Element{
 
 	@Override
 	public int getActionPoint() {
-		// TODO Auto-generated method stub
 		return this.getTop();
 	}
 	

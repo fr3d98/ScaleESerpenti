@@ -11,12 +11,7 @@ public class Builder implements BuilderIF{
 		//TODO
 		return gm;
 	}
-
-	private boolean isTaken(int pos) {
-		return occupied.contains(pos);
-	}
 	
-
 
 	@Override
 	public void buildSpace(int rows, int columns) {
@@ -49,16 +44,43 @@ public class Builder implements BuilderIF{
 	}
 
 	@Override
-	public void buildRestBoxes(int... pos) {
-		// TODO Auto-generated method stub
-		
+	public void buildBenches(int... pos) {
+		for(int i : pos) {
+			Element e= Bench.INSTANCE;
+			e.locateElement(occupied, i);
+			HashGameMap.INSTANCE.addNewElement(e);
+		}
 	}
 
 	@Override
-	public void buildPrizeBoxes(int... pos) {
-		// TODO Auto-generated method stub
+	public void buildRests(int... pos) {
+		for(int i : pos) {
+			Element e= Rest.INSTANCE;
+			e.locateElement(occupied, i);
+			HashGameMap.INSTANCE.addNewElement(e);
+		}
+	}
+
+	@Override
+	public void buildDaceBoxes(int... pos) {
+		for(int i : pos) {
+			Element e = DaceBoxes.INSTANCE;
+			e.locateElement(occupied, i);
+			HashGameMap.INSTANCE.addNewElement(e);
+		}
+	}
+
+	@Override
+	public void buildCardBoxes(int... pos) {
 		
 	}
+
+
+	@Override
+	public void buildDaces(int N) {
+		Daces.INSTANCE.setNumberOfDaces(N);
+	}
+
 
 	
 

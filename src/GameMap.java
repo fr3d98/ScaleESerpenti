@@ -1,4 +1,3 @@
-
 public interface GameMap {
 	
 	public int putPlayerIn(Player p, int pos);

@@ -4,6 +4,11 @@ import java.util.Set;
 public class Builder implements BuilderIF{
 	
 	private Set<Integer> occupied;
+	/**
+	 * This set in given as a parameter to Elements and is filled by them.
+	 * This is necessary since some elements occupy only one position but others may occupy two.
+	 */
+	
 
 	@Override
 	public GameMap getGameMap() {
@@ -79,6 +84,12 @@ public class Builder implements BuilderIF{
 	@Override
 	public void buildDaces(int N) {
 		Daces.INSTANCE.setNumberOfDaces(N);
+	}
+
+
+	@Override
+	public void buildDeck() {
+		Deck.INSTANCE.generateDeck();
 	}
 
 

@@ -39,4 +39,5 @@ public enum HashGameMap implements GameMap {
 		Element el= HashGameMap.INSTANCE.getElementIn(13);
 		System.out.println(el.getActionPoint());
 	}
+
 }

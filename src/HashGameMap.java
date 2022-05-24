@@ -5,14 +5,12 @@ public enum HashGameMap implements GameMap {
 	
 	INSTANCE;
 
-	private Map<Integer, Element> elements;
+	private Map<Integer, Element> elements= new HashMap<>();
 	
-	public void generateMap() {
-		elements=new HashMap<>();
-	}
 	
 	public void addNewElement(Element e) {
 		int pos=e.getActionPoint();
+		if(elements.containsKey(pos))throw new IllegalArgumentException("Can't put element in this position!");
 		elements.put(pos, e);
 	}
 	

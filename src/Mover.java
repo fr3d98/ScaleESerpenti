@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Set;
 
 abstract class Mover implements Element {
@@ -10,13 +9,11 @@ abstract class Mover implements Element {
 	
 	
 	@Override
-	public void locateElement(Set<Integer> set, int N) {
-		Random r= new Random();
-		int top, bottom;
-		do {
-			top=r.nextInt(N)+1;
-			bottom=r.nextInt(N)+1;
-		}while(top<=bottom || set.contains(top) || set.contains(bottom));
+	public void locateElement(Set<Integer> set, int ... pos) {
+		top=pos[0]; bottom=pos[1];
+		if(top<=bottom || set.contains(top) || set.contains(bottom)) {
+			throw new IllegalArgumentException("Position already taken! Choose differently.");
+		}
 		this.setTop(top); this.setBottom(bottom);
 		set.add(top); set.add(bottom);
 	}

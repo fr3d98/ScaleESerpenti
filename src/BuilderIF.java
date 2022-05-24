@@ -4,8 +4,9 @@ public interface BuilderIF {
 	
 	public GameMap getGameMap();
 	
-	public void buildSnakes(int n);
-	public void buildLadders(int n);
-	public void buildRestBoxes(int n);
-	public void buildPrizeBoxes(int n);
+	public void buildSpace(int rows, int columns);
+	public void buildSnakes(int[] ... s);
+	public void buildLadders(int[] ... n);
+	public void buildRestBoxes(int ... pos);
+	public void buildPrizeBoxes(int ... pos );
 }

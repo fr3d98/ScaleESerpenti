@@ -4,7 +4,7 @@ interface Element {
 	
 	int action(Player p);
 	
-	void locateElement(Set<Integer> set, int N);
+	void locateElement(Set<Integer> set, int ... pos);
 	
 	int getActionPoint();
 

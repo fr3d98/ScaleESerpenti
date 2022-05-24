@@ -1,4 +1,3 @@
-import java.util.Random;
 import java.util.Set;
 
 abstract class Box implements Element {
@@ -14,14 +13,11 @@ abstract class Box implements Element {
 	}
 	
 	@Override
-	public void locateElement(Set<Integer> set, int N) {
-		Random r=new Random();
-		int pos;
-		do {
-			pos=r.nextInt(N)+1;
-		}while(set.contains(pos));
-		this.pos=pos;
-		set.add(pos);
+	public void locateElement(Set<Integer> set, int ... pos) {
+		if(set.contains(pos[0]))
+			throw new IllegalArgumentException("Position already taken! Choose differently.");
+		this.pos=pos[0];
+		set.add(pos[0]);
 	}
 
 	int getPos() {

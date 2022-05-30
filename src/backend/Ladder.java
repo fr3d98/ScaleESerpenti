@@ -1,3 +1,4 @@
+package backend;
 
 class Ladder extends Mover implements Element {
 	
@@ -6,8 +7,7 @@ class Ladder extends Mover implements Element {
 		//the ladder moves the players up
 		if(p.getCurrPos()!=bottom)
 			throw new IllegalStateException("Player's position doesn't match with ladder's");
-		p.moveTo(top);
-		
+		System.out.println(p+" goes up with ladder in position "+ top);
 		return top;
 	}
 

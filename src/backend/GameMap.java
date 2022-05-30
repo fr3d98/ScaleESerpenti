@@ -1,3 +1,4 @@
+package backend;
 public interface GameMap {
 	
 	public int putPlayerIn(Player p, int pos);
@@ -6,6 +7,8 @@ public interface GameMap {
 	 * position "pos", then returns the actual position
 	 */
 	public Element getElementIn(int pos);
+	
+	public int playARound();
 	
 	
 

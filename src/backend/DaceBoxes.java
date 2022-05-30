@@ -1,5 +1,5 @@
+package backend;
 import java.util.Set;
-
 public enum DaceBoxes implements Element {
 	INSTANCE;
 	
@@ -7,9 +7,10 @@ public enum DaceBoxes implements Element {
 
 	@Override
 	public int action(Player p) {
-		int q=Daces.INSTANCE.throww(p);
-		p.moveForward(q);
-		return p.getCurrPos();
+		System.out.println(p+" gets to throw daces!");
+		int q=p.throwDaces();
+		int pos=q+p.getCurrPos();
+		return pos;
 	}
 
 	@Override
@@ -20,6 +21,7 @@ public enum DaceBoxes implements Element {
 			throw new IllegalArgumentException("Can't put in this position, already taken.");
 		this.pos=pos[0];
 		set.add(pos[0]);
+		System.out.println("DaceBox located in "+this.pos);
 	}
 
 	@Override

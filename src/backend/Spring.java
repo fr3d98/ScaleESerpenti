@@ -1,3 +1,4 @@
+package backend;
 import java.util.Set;
 
 public enum Spring implements Element {
@@ -7,8 +8,9 @@ public enum Spring implements Element {
 
 	@Override
 	public int action(Player p) {
-		p.moveForward(p.getLastScore());
-		return p.getCurrPos();
+		//moves the player again according to last score
+		int nPos=p.getLastScore()+p.getCurrPos();
+		return nPos;
 		}
 
 	@Override

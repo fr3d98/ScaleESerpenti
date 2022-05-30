@@ -1,3 +1,4 @@
+package backend;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,8 +35,11 @@ public enum Deck {
 	
 	public Card pick() {
 		Card c= deck.remove(0);
-		deck.add(deck.size(), c);
 		return c;
+	}
+	
+	public void putBackCard(Card c) {
+		deck.add(deck.size(), c);
 	}
 	
 	@Override

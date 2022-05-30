@@ -1,3 +1,4 @@
+package backend;
 class Player {
 	
 	private int currPos; //posizione corrente
@@ -9,10 +10,19 @@ class Player {
 	private boolean noStopCard;
 	
 	public Player() {
-		currPos=1;
+		currPos=0;
 		noStopCard=false;
 		lastPos=0;
 		roundsToWait=0;
+	}
+	
+	public int throwDaces() {
+		//player consumes a round throwing daces
+		/*
+		 */
+		int ris=Daces.INSTANCE.throww(this);
+		this.setLastScore(ris);
+		return ris;
 	}
 	
 	public boolean hasNoStopCard() {return noStopCard;}
@@ -75,6 +85,55 @@ class Player {
 		this.roundsToWait = roundsToWait;
 	}
 	
+	@Override
+	public String toString() {
+		return "Player "+this.cardinal;
+	}
+	
+	
+	public static void main(String...args) {
+		
+		BuilderIF builder= new Builder();
+		
+		builder.buildSpace(10, 10);
+		builder.buildSnakesRandom(8);
+		builder.buildLaddersRandom(8);
+		builder.buildDaces(2);
+
+		GameMap gm=builder.getGameMap();
+		
+		Player[] players = builder.buildPlayers(4);
+		System.out.println("All players are in: ");
+		for(Player p : players) {
+			System.out.println(p.getCardinal()+" in: ["+p.getCurrPos()+"]");
+		}
+		
+		boolean won=false;
+		int i=1;
+		while (!won) {
+			System.out.println("________Round "+i+"________");
+			for (Player p : players) {
+				gm.playARound();
+				if (p.getCurrPos() == 100) {
+					won=true;
+					break;
+				}
+				if(p.getCurrPos()>100)throw new IllegalStateException("Can't go out the map!");
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			i++;
+		}
+		
+		
+		
+		
+		
+		
+	}
 	
 	
 }

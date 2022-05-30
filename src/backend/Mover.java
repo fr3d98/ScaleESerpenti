@@ -1,3 +1,4 @@
+package backend;
 import java.util.Set;
 
 abstract class Mover implements Element {
@@ -16,6 +17,7 @@ abstract class Mover implements Element {
 		}
 		this.setTop(top); this.setBottom(bottom);
 		set.add(top); set.add(bottom);
+		System.out.println("Mover located in top: "+top+ "and bottom: "+bottom);
 	}
 
 	public int getTop() {

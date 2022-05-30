@@ -1,3 +1,4 @@
+package backend;
 import java.util.Set;
 
 /**
@@ -21,8 +22,11 @@ public enum Bench implements Element{
 		// makes the player stop for 1 round, returns player position
 		if(p.hasNoStopCard()) {
 			p.noStopCardConsumed();
+			Deck.INSTANCE.putBackCard(Card.NOSTOP);
+			System.out.println(p+" has a no-stop card and keeps playing");
 		}else {
 			p.setRoundsToWait(1);
+			System.out.println(p+" must wait one round to play again.");
 		}
 		return p.getCurrPos();
 	}

@@ -1,3 +1,4 @@
+package backend;
 import java.util.Set;
 
 public enum Rest implements Element {
@@ -9,8 +10,11 @@ public enum Rest implements Element {
 	public int action(Player p) {
 		if(p.hasNoStopCard()) {
 			p.noStopCardConsumed();
+			Deck.INSTANCE.putBackCard(Card.NOSTOP);
+			System.out.println(p+" has a No-stop card and keeps playing");
 		}else {
 			p.setRoundsToWait(3);
+			System.out.println(p+" must wait 3 rounds to play again");
 		}
 		return p.getCurrPos();
 	}

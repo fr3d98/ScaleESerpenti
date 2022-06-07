@@ -10,7 +10,7 @@ class Player {
 	private boolean noStopCard;
 	
 	public Player() {
-		currPos=0;
+		currPos=1;
 		noStopCard=false;
 		lastPos=0;
 		roundsToWait=0;

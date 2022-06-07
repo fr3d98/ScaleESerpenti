@@ -14,6 +14,11 @@ public enum HashGameMap implements GameMap {
 	
 	private int actualPlayer=0;
 	
+	@Override
+	public int getActualPlayer() {
+		return actualPlayer;
+	}
+
 	public void addNewElement(Element e) {
 		int pos=e.getActionPoint();
 		if(elements.containsKey(pos))throw new IllegalArgumentException("Can't put element in this position!");

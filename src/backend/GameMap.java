@@ -10,6 +10,8 @@ public interface GameMap {
 	
 	public int playARound();
 	
+	public int getActualPlayer();
+	
 	
 
 }

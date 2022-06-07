@@ -115,7 +115,7 @@ public class Builder implements BuilderIF{
 		Player[] players= new Player[N];
 		for(int i=0; i<N; i++) {
 			players[i]=new Player();
-			players[i].setCardinal(i);
+			players[i].setCardinal(i+1);
 		}
 		HashGameMap.INSTANCE.setPlayers(players);
 		return players;

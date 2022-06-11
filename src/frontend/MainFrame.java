@@ -1,6 +1,5 @@
 package frontend;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -8,29 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import javafx.scene.layout.Border;
-import javafx.scene.paint.Color;
-
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTable;
-import javax.swing.JSeparator;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
-
-import java.awt.GridBagLayout;
-import net.miginfocom.swing.MigLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
 public class MainFrame extends JFrame {
 
@@ -150,11 +136,6 @@ public class MainFrame extends JFrame {
 		);
 		mapPanel.setLayout(new GridLayout(cols, rows, 0, 0));
 		contentPane.setLayout(gl_contentPane);
-		
-		mapPanel.addPlayer(0, 1);
-		mapPanel.addPlayer(7, 2);
-		mapPanel.addPlayer(12, 3);
-		mapPanel.addElement(13, "SCALA");
 		
 	}
 }

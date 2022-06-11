@@ -1,4 +1,5 @@
 package backend;
+
 class Player {
 	
 	private int currPos; //posizione corrente
@@ -8,6 +9,7 @@ class Player {
 	private int roundsToWait;
 	
 	private boolean noStopCard;
+	
 	
 	public Player() {
 		currPos=1;
@@ -99,9 +101,15 @@ class Player {
 		builder.buildSnakesRandom(8);
 		builder.buildLaddersRandom(8);
 		builder.buildDaces(2);
+		
 
 		GameMap gm=builder.getGameMap();
 		
+
+		for(int i=0; i<100; i++) {
+			System.out.println(gm.getElementIn(i));
+		}
+		/**
 		Player[] players = builder.buildPlayers(4);
 		System.out.println("All players are in: ");
 		for(Player p : players) {
@@ -126,11 +134,10 @@ class Player {
 				}
 			}
 			i++;
+			
+			
 		}
-		
-		
-		
-		
+	*/
 		
 		
 	}

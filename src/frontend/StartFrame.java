@@ -1,40 +1,46 @@
 package frontend;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.Image;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import javax.swing.JList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 
 public class StartFrame extends JFrame {
 
+	private static final long serialVersionUID = -3244632887623664140L;
 	private JPanel contentPane;
 	private JTextField fieldPlayers;
 	private JTextField fieldSnakes;
-	private JTextField fielsLadders;
+	private JTextField fieldLadders;
 	private JTextField fieldColumns;
 	private JTextField fieldRows;
-	private JTextField stopField;
-	private JTextField prizeField;
-
+	private JTextField fieldBench;
+	private JTextField fieldSpring;
+	private JTextField fieldRest;
+	private JTextField fieldDace;
+	private JTextField fieldCards;
+	private JComboBox dacesComboBox;
+	
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		init();
+	}
+
+	public static void init() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,14 +52,14 @@ public class StartFrame extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
 	public StartFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 449, 454);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -66,11 +72,8 @@ public class StartFrame extends JFrame {
 		contentPane.add(txtrBenvenutoInscale);
 		
 		JButton start = new JButton("Inizia simulazione");
-		start.setBounds(5, 239, 440, 27);
-		start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		start.setBounds(12, 386, 425, 27);
+		start.addActionListener(new SimulationStarted());
 		contentPane.add(start);
 		
 		JLabel lblNumeroGiocatori = new JLabel("Numero giocatori");
@@ -103,10 +106,10 @@ public class StartFrame extends JFrame {
 		contentPane.add(fieldSnakes);
 		fieldSnakes.setColumns(10);
 		
-		fielsLadders = new JTextField();
-		fielsLadders.setBounds(123, 105, 58, 21);
-		contentPane.add(fielsLadders);
-		fielsLadders.setColumns(10);
+		fieldLadders = new JTextField();
+		fieldLadders.setBounds(123, 105, 58, 21);
+		contentPane.add(fieldLadders);
+		fieldLadders.setColumns(10);
 		
 		fieldColumns = new JTextField();
 		fieldColumns.setBounds(123, 134, 59, 21);
@@ -119,30 +122,186 @@ public class StartFrame extends JFrame {
 		fieldRows.setColumns(10);
 		
 		JLabel lblNumeroDadi = new JLabel("Numero Dadi");
-		lblNumeroDadi.setBounds(12, 190, 93, 17);
+		lblNumeroDadi.setBounds(12, 295, 93, 17);
 		contentPane.add(lblNumeroDadi);
 		
-		JComboBox dacesComboBox = new JComboBox();
+		dacesComboBox = new JComboBox();
 		dacesComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2"}));
-		dacesComboBox.setBounds(124, 192, 42, 17);
+		dacesComboBox.setBounds(106, 295, 42, 17);
 		contentPane.add(dacesComboBox);
 		
-		JLabel lblNumero = new JLabel("Numero Caselle Sosta");
-		lblNumero.setBounds(225, 51, 138, 17);
+		JLabel lblNumero = new JLabel("Numero Caselle Panchine");
+		lblNumero.setBounds(225, 51, 154, 17);
 		contentPane.add(lblNumero);
 		
-		JLabel lblNumeroCasellePremio = new JLabel("Numero Caselle Premio");
-		lblNumeroCasellePremio.setBounds(225, 80, 150, 17);
+		JLabel lblNumeroCasellePremio = new JLabel("Numero Caselle Molla");
+		lblNumeroCasellePremio.setBounds(12, 190, 150, 17);
 		contentPane.add(lblNumeroCasellePremio);
 		
-		stopField = new JTextField();
-		stopField.setBounds(372, 49, 50, 21);
-		contentPane.add(stopField);
-		stopField.setColumns(10);
+		fieldBench = new JTextField();
+		fieldBench.setBounds(386, 49, 51, 21);
+		contentPane.add(fieldBench);
+		fieldBench.setColumns(10);
 		
-		prizeField = new JTextField();
-		prizeField.setBounds(372, 78, 50, 21);
-		contentPane.add(prizeField);
-		prizeField.setColumns(10);
+		fieldSpring = new JTextField();
+		fieldSpring.setBounds(149, 188, 50, 21);
+		contentPane.add(fieldSpring);
+		fieldSpring.setColumns(10);
+		
+		JLabel lblNumeroCaselleLocande = new JLabel("Numero caselle Locande");
+		lblNumeroCaselleLocande.setBounds(225, 80, 154, 17);
+		contentPane.add(lblNumeroCaselleLocande);
+		
+		fieldRest = new JTextField();
+		fieldRest.setBounds(386, 78, 51, 21);
+		contentPane.add(fieldRest);
+		fieldRest.setColumns(10);
+		
+		JLabel lblNumeroCaselleDadi = new JLabel("Numero caselle Dadi");
+		lblNumeroCaselleDadi.setBounds(12, 221, 143, 17);
+		contentPane.add(lblNumeroCaselleDadi);
+		
+		fieldDace = new JTextField();
+		fieldDace.setBounds(149, 219, 58, 21);
+		contentPane.add(fieldDace);
+		fieldDace.setColumns(10);
+		
+		JLabel lblNumeroCaselle = new JLabel("Numero caselle Carte");
+		lblNumeroCaselle.setBounds(12, 250, 136, 17);
+		contentPane.add(lblNumeroCaselle);
+		
+		fieldCards = new JTextField();
+		fieldCards.setBounds(151, 250, 58, 21);
+		contentPane.add(fieldCards);
+		fieldCards.setColumns(10);
+		
+		JCheckBox randomSnakes = new JCheckBox("Generazione Random Serpenti");
+		randomSnakes.setBounds(225, 103, 220, 25);
+		contentPane.add(randomSnakes);
+		
+		JCheckBox randomLadders = new JCheckBox("Generazione Random Scale");
+		randomLadders.setBounds(225, 132, 197, 25);
+		contentPane.add(randomLadders);
+		
+		JCheckBox randomDaces = new JCheckBox("Generazione random Dadi");
+		randomDaces.setBounds(225, 157, 197, 25);
+		contentPane.add(randomDaces);
+		
+		JCheckBox randomBenches = new JCheckBox("Generazione random Panchine");
+		randomBenches.setBounds(225, 186, 216, 25);
+		contentPane.add(randomBenches);
+		
+		JCheckBox randomRest = new JCheckBox("Generazione random Locande");
+		randomRest.setBounds(225, 217, 203, 25);
+		contentPane.add(randomRest);
+		
+		JCheckBox randomSprings = new JCheckBox("Generazione random Molle");
+		randomSprings.setBounds(225, 246, 197, 25);
+		contentPane.add(randomSprings);
+		
+		JCheckBox randomCards = new JCheckBox("Generazione random Carte");
+		randomCards.setBounds(225, 275, 197, 25);
+		contentPane.add(randomCards);
+	}
+	
+	class SimulationStarted implements ActionListener{
+		int nRows,nCols,nPlayers,nSnakes,nLadders,nCards,nSprings,nBenches,nRests,nDaceBoxes, nDaces;
+		
+		private int getQuantity(String s) {
+			try {
+				int ris=Integer.parseInt(s.trim());
+				return ris;
+			}catch(NumberFormatException NFE) {
+				return 0;
+			}
+		}
+		
+		private int[][] takeMoverPositions(String element, int len){
+			boolean inError=false;
+			do{
+				try {
+					String s= JOptionPane.showInputDialog("Inserisci le poszioni dei "+
+				element+" tra ',' e separate da uno spazio. ").trim();
+					String[] a = s.split(" ");
+					if(a.length!=len)
+						throw new IllegalArgumentException("Elements number mismatch.");
+					int[][] ris=new int[a.length][2];
+					for(int i=0; i<a.length; i++) {
+						String [] part= a[i].trim().split(",");
+						if(part.length!=2)throw new IllegalArgumentException("Elements position in map is badly written.");
+						for(int j=0; j<2; j++) {
+							int val=Integer.parseInt(part[j]);
+							if(val<=0 || val> nRows*nCols)throw new IllegalArgumentException("Must enter a valid value.");
+							ris[i][j]=val;
+							Arrays.sort(ris[i]);
+						}
+					}
+					inError=false;
+					return ris;
+				}catch(IllegalArgumentException IAE) {
+					JOptionPane.showMessageDialog(rootPane, IAE);
+					inError=true;
+				}
+				
+			}while(inError);
+			return null;
+		}
+		
+		private int[] takePositions(String element, int len) {
+			boolean inError=false;
+			do {
+				try {
+					String s=JOptionPane.showInputDialog("Inserisci le posizioni di "+element+
+							"separate da spazi.").trim();
+					String[] a =s.split(" ");
+					if(a.length!=len)
+						throw new IllegalArgumentException("Length mismatch.");
+					int[] pos=new int[len];
+					for(int i=0; i<len; i++) pos[i]=Integer.parseInt(a[i]);
+					inError=false;
+					return pos;
+				}catch(IllegalArgumentException IAE) {
+					inError=true;
+					JOptionPane.showMessageDialog(rootPane,IAE);
+				}
+			}while(inError);
+			return null;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			nPlayers=getQuantity(fieldPlayers.getText());
+			nRows=getQuantity(fieldRows.getText());
+			nCols=getQuantity(fieldColumns.getText());
+			nSnakes=getQuantity(fieldSnakes.getText());
+			nLadders=getQuantity(fieldLadders.getText());
+			nSprings=getQuantity(fieldSpring.getText());
+			nCards=getQuantity(fieldCards.getText());
+			nBenches=getQuantity(fieldBench.getText());
+			nRests=getQuantity(fieldRest.getText());
+			nDaceBoxes=getQuantity(fieldDace.getText());
+			
+			nDaces=Integer.parseInt((String)dacesComboBox.getSelectedItem());
+			
+			int elementsNumber=(nSnakes+nLadders)*2+nSprings+nCards+nBenches+nRests+nDaceBoxes;
+			
+			if(elementsNumber> nRows*nCols) {
+				JOptionPane.showMessageDialog(rootPane, "La mappa non può contenere tutti questi elementi!");
+				return;
+			}
+			
+			int [][] snakes=takeMoverPositions("Serpenti", nSnakes);
+			int [][] ladders=takeMoverPositions("Scale", nLadders);
+			int [] cards=takePositions("Carte", nCards);
+			int [] springs=takePositions("Molle", nSprings);
+			int [] daces=takePositions("Caselle Dadi", nDaceBoxes);
+			int [] benches=takePositions("Panchine", nBenches);
+			int [] rests=takePositions("Locande",nRests);
+			
+			for(int i=0; i<cards.length; i++) {
+				System.out.println(cards[i]);
+			}
+		}
+		
 	}
 }

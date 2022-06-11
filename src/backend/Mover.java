@@ -11,7 +11,7 @@ abstract class Mover implements Element {
 	
 	@Override
 	public void locateElement(Set<Integer> set, int ... pos) {
-		top=pos[0]; bottom=pos[1];
+		top=pos[1]; bottom=pos[0];
 		if(top<=bottom || set.contains(top) || set.contains(bottom)) {
 			throw new IllegalArgumentException("Position already taken! Choose differently.");
 		}

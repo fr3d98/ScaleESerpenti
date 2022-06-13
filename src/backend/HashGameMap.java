@@ -57,6 +57,7 @@ public enum HashGameMap implements GameMap {
 	@Override
 	public String getElementIn(int pos) {
 		Element e = elements.get(pos);
+		if(e==null)return "";
 		if(e instanceof Snake) {
 			Snake s= (Snake) e;
 			return "SERPENTE "+ s.getBottom();
@@ -73,6 +74,7 @@ public enum HashGameMap implements GameMap {
 	@Override
 	public int playARound() {
 		Player p=players[actualPlayer];
+		actualPlayer=(++actualPlayer)%players.length;
 		if(p.getRoundsToWait()!=0) {
 			System.out.println(p+" must wait "+p.getRoundsToWait()+" rounds to play");
 			p.setRoundsToWait(p.getRoundsToWait()-1);
@@ -83,7 +85,6 @@ public enum HashGameMap implements GameMap {
 		if(p.getCurrPos()+ris>N) ris=ris+p.getCurrPos()-N;
 		int nPos=p.getCurrPos()+ris;
 		lastPlayer=actualPlayer;
-		actualPlayer=(++actualPlayer)%players.length;
 		return putPlayerIn(p,nPos);
 	}
 
@@ -100,6 +101,11 @@ public enum HashGameMap implements GameMap {
 	@Override
 	public int getDaceRis() {
 		return daceRis;
+	}
+
+	@Override
+	public boolean isPlayerBlocked(int player) {
+		return players[player].getRoundsToWait()!=0;
 	}
 	
 	

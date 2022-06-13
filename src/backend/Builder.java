@@ -89,6 +89,15 @@ public class Builder implements BuilderIF{
 		}
 		
 	}
+	
+	@Override
+	public void buildSpringBoxes(int ...pos) {
+		for(int i : pos) {
+		 Element e = Spring.INSTANCE;
+		 e.locateElement(occupied, i);
+		 HashGameMap.INSTANCE.addNewElement(e);
+		}
+	}
 
 
 	@Override
@@ -132,7 +141,7 @@ public class Builder implements BuilderIF{
 			do {
 				top=r.nextInt(bound)+1; bottom=r.nextInt(bound)+1;
 			}while(top<=bottom || occupied.contains(top) || occupied.contains(bottom));
-			int[] pos= {top,bottom};
+			int[] pos= {bottom,top};
 			buildSnakes(pos);
 		}
 	}
@@ -148,7 +157,7 @@ public class Builder implements BuilderIF{
 			do {
 				top=r.nextInt(bound)+1; bottom=r.nextInt(bound)+1;
 			}while(top<=bottom || occupied.contains(top) || occupied.contains(bottom));
-			int[] pos= {top,bottom};
+			int[] pos= {bottom,top};
 			buildLadders(pos);
 		}
 		
@@ -211,6 +220,20 @@ public class Builder implements BuilderIF{
 				pos=r.nextInt(bound)+1;
 			}while(occupied.contains(pos));
 			buildCardBoxes(pos);
+		}
+	}
+	
+	@Override
+	public void buildSpringBoxesRandom(int N) {
+		if(occupied==null || bound==0)
+			throw new IllegalStateException("Must create space first.");
+		Random r=new Random();
+		for(int i=0; i<N; i++) {
+			int pos;
+			do {
+				pos=r.nextInt(bound)+1;
+			}while(occupied.contains(pos));
+			buildSpringBoxes(pos);
 		}
 	}
 	

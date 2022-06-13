@@ -18,10 +18,10 @@ public class MapPanel extends JPanel {
 		super();
 		setLayout(new GridLayout(rows, cols, 0, 0));
 		N=rows*cols;
-		boxes=new Box[N];
-		for(int i=0; i<N; i++) {
+		boxes=new Box[N+1];
+		for(int i=1; i<=N; i++) {
 			boxes[i]=new Box();
-			boxes[i].setCardinal(i+1);
+			boxes[i].setCardinal(i);
 			this.add(boxes[i]);
 		}
 	}
@@ -40,6 +40,10 @@ public class MapPanel extends JPanel {
 
 	public void setPlayers(int players) {
 		this.players = players;
+	}
+	
+	public Box[] getBoxes() {
+		return boxes;
 	}
 
 	

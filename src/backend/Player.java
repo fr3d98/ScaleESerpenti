@@ -100,6 +100,9 @@ class Player {
 		builder.buildSpace(10, 10);
 		builder.buildSnakesRandom(8);
 		builder.buildLaddersRandom(8);
+		builder.buildSpringBoxesRandom(8);
+		builder.buildRestsRandom(8);
+		builder.buildCardBoxesRandom(8);
 		builder.buildDaces(2);
 		
 

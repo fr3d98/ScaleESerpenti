@@ -4,6 +4,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import backend.Builder;
+import backend.BuilderIF;
+import backend.GameMap;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
@@ -31,6 +36,11 @@ public class StartFrame extends JFrame {
 	private JTextField fieldDace;
 	private JTextField fieldCards;
 	private JComboBox dacesComboBox;
+	private JCheckBox randomSnakes, randomLadders, randomBenches, randomCards, randomSprings,
+	randomDaces, randomRests;
+	
+	private BuilderIF builder;
+	private int nRows, nCols, nPlayers;
 	
 	
 	/**
@@ -96,27 +106,27 @@ public class StartFrame extends JFrame {
 		lblNumeroRighe.setBounds(12, 161, 103, 17);
 		contentPane.add(lblNumeroRighe);
 		
-		fieldPlayers = new JTextField();
+		fieldPlayers = new JTextField("4");
 		fieldPlayers.setBounds(124, 49, 58, 21);
 		contentPane.add(fieldPlayers);
 		fieldPlayers.setColumns(10);
 		
-		fieldSnakes = new JTextField();
+		fieldSnakes = new JTextField("10");
 		fieldSnakes.setBounds(124, 80, 58, 21);
 		contentPane.add(fieldSnakes);
 		fieldSnakes.setColumns(10);
 		
-		fieldLadders = new JTextField();
+		fieldLadders = new JTextField("10");
 		fieldLadders.setBounds(123, 105, 58, 21);
 		contentPane.add(fieldLadders);
 		fieldLadders.setColumns(10);
 		
-		fieldColumns = new JTextField();
+		fieldColumns = new JTextField("10");
 		fieldColumns.setBounds(123, 134, 59, 21);
 		contentPane.add(fieldColumns);
 		fieldColumns.setColumns(10);
 		
-		fieldRows = new JTextField();
+		fieldRows = new JTextField("10");
 		fieldRows.setBounds(124, 159, 58, 21);
 		contentPane.add(fieldRows);
 		fieldRows.setColumns(10);
@@ -138,12 +148,12 @@ public class StartFrame extends JFrame {
 		lblNumeroCasellePremio.setBounds(12, 190, 150, 17);
 		contentPane.add(lblNumeroCasellePremio);
 		
-		fieldBench = new JTextField();
+		fieldBench = new JTextField("5");
 		fieldBench.setBounds(386, 49, 51, 21);
 		contentPane.add(fieldBench);
 		fieldBench.setColumns(10);
 		
-		fieldSpring = new JTextField();
+		fieldSpring = new JTextField("5");
 		fieldSpring.setBounds(149, 188, 50, 21);
 		contentPane.add(fieldSpring);
 		fieldSpring.setColumns(10);
@@ -152,7 +162,7 @@ public class StartFrame extends JFrame {
 		lblNumeroCaselleLocande.setBounds(225, 80, 154, 17);
 		contentPane.add(lblNumeroCaselleLocande);
 		
-		fieldRest = new JTextField();
+		fieldRest = new JTextField("5");
 		fieldRest.setBounds(386, 78, 51, 21);
 		contentPane.add(fieldRest);
 		fieldRest.setColumns(10);
@@ -161,7 +171,7 @@ public class StartFrame extends JFrame {
 		lblNumeroCaselleDadi.setBounds(12, 221, 143, 17);
 		contentPane.add(lblNumeroCaselleDadi);
 		
-		fieldDace = new JTextField();
+		fieldDace = new JTextField("5");
 		fieldDace.setBounds(149, 219, 58, 21);
 		contentPane.add(fieldDace);
 		fieldDace.setColumns(10);
@@ -170,42 +180,66 @@ public class StartFrame extends JFrame {
 		lblNumeroCaselle.setBounds(12, 250, 136, 17);
 		contentPane.add(lblNumeroCaselle);
 		
-		fieldCards = new JTextField();
+		fieldCards = new JTextField("5");
 		fieldCards.setBounds(151, 250, 58, 21);
 		contentPane.add(fieldCards);
 		fieldCards.setColumns(10);
 		
-		JCheckBox randomSnakes = new JCheckBox("Generazione Random Serpenti");
+		randomSnakes = new JCheckBox("Generazione Random Serpenti");
 		randomSnakes.setBounds(225, 103, 220, 25);
 		contentPane.add(randomSnakes);
+		randomSnakes.setSelected(true);
 		
-		JCheckBox randomLadders = new JCheckBox("Generazione Random Scale");
+		randomLadders = new JCheckBox("Generazione Random Scale");
 		randomLadders.setBounds(225, 132, 197, 25);
 		contentPane.add(randomLadders);
+		randomLadders.setSelected(true);
 		
-		JCheckBox randomDaces = new JCheckBox("Generazione random Dadi");
+		randomDaces = new JCheckBox("Generazione random Dadi");
 		randomDaces.setBounds(225, 157, 197, 25);
 		contentPane.add(randomDaces);
+		randomDaces.setSelected(true);
 		
-		JCheckBox randomBenches = new JCheckBox("Generazione random Panchine");
+		randomBenches = new JCheckBox("Generazione random Panchine");
 		randomBenches.setBounds(225, 186, 216, 25);
 		contentPane.add(randomBenches);
+		randomBenches.setSelected(true);
 		
-		JCheckBox randomRest = new JCheckBox("Generazione random Locande");
-		randomRest.setBounds(225, 217, 203, 25);
-		contentPane.add(randomRest);
+		randomRests = new JCheckBox("Generazione random Locande");
+		randomRests.setBounds(225, 217, 203, 25);
+		contentPane.add(randomRests);
+		randomRests.setSelected(true);
 		
-		JCheckBox randomSprings = new JCheckBox("Generazione random Molle");
+		randomSprings = new JCheckBox("Generazione random Molle");
 		randomSprings.setBounds(225, 246, 197, 25);
 		contentPane.add(randomSprings);
+		randomSprings.setSelected(true);
 		
-		JCheckBox randomCards = new JCheckBox("Generazione random Carte");
+		randomCards = new JCheckBox("Generazione random Carte");
 		randomCards.setBounds(225, 275, 197, 25);
 		contentPane.add(randomCards);
+		randomCards.setSelected(true);
+	}
+	
+	
+	private void openMainFrame() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					MainFrame mf= new MainFrame(nRows, nCols, nPlayers, builder.getGameMap());
+					mf.setVisible(true);					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		this.dispose();
 	}
 	
 	class SimulationStarted implements ActionListener{
-		int nRows,nCols,nPlayers,nSnakes,nLadders,nCards,nSprings,nBenches,nRests,nDaceBoxes, nDaces;
+		int nSnakes,nLadders,nCards,nSprings,nBenches,nRests,nDaceBoxes, nDaces;
+		int [][] snakes, ladders;
+		int[] cards,springs,daces,benches,rests;
 		
 		private int getQuantity(String s) {
 			try {
@@ -290,17 +324,56 @@ public class StartFrame extends JFrame {
 				return;
 			}
 			
-			int [][] snakes=takeMoverPositions("Serpenti", nSnakes);
-			int [][] ladders=takeMoverPositions("Scale", nLadders);
-			int [] cards=takePositions("Carte", nCards);
-			int [] springs=takePositions("Molle", nSprings);
-			int [] daces=takePositions("Caselle Dadi", nDaceBoxes);
-			int [] benches=takePositions("Panchine", nBenches);
-			int [] rests=takePositions("Locande",nRests);
+			builder=new Builder();
+			builder.buildSpace(nRows, nCols);
+			builder.buildDaces(nDaces);
+			builder.buildPlayers(nPlayers);
+			builder.buildDeck();
 			
-			for(int i=0; i<cards.length; i++) {
-				System.out.println(cards[i]);
+			if(randomSnakes.isSelected()) {
+				builder.buildSnakesRandom(nSnakes);
+			}else {
+				snakes=takeMoverPositions("Serpenti", nSnakes);
+				builder.buildSnakes(snakes);
 			}
+			if(randomLadders.isSelected()) {
+				builder.buildLaddersRandom(nLadders);
+			}else {
+				ladders=takeMoverPositions("Scale", nLadders);
+				builder.buildLadders(ladders);
+			}
+			if(randomCards.isSelected()) {
+				builder.buildCardBoxesRandom(nCards);
+			}else {
+				cards=takePositions("Carte", nCards);
+				builder.buildCardBoxes(cards);
+			}
+			if(randomSprings.isSelected()) {
+				builder.buildSpringBoxesRandom(nSprings);
+			}else {
+				springs=takePositions("Molle", nSprings);
+				builder.buildSpringBoxes(springs);
+			}
+			if(randomDaces.isSelected()) {
+				builder.buildDaceBoxesRandom(nDaceBoxes);
+			}else {
+				daces=takePositions("Caselle Dadi", nDaceBoxes);
+				builder.buildDaceBoxes(daces);
+			}
+			if(randomBenches.isSelected()) {
+				builder.buildBenchesRandom(nBenches);
+			}else {
+				benches=takePositions("Panchine", nBenches);
+				builder.buildBenches(benches);
+			}
+			if(randomRests.isSelected()) {
+				builder.buildRestsRandom(nRests);
+			}else {
+				rests=takePositions("Locande",nRests);
+				builder.buildRests(rests);
+			}
+			
+			openMainFrame();
 		}
 		
 	}

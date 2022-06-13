@@ -12,5 +12,7 @@ public interface GameMap {
 	public int getPlayerPosition(int player);
 	
 	public int getDaceRis();
+	
+	public boolean isPlayerBlocked(int player);
 
 }

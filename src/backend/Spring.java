@@ -7,9 +7,10 @@ public enum Spring implements Element {
 	private int pos;
 
 	@Override
-	public int action(Player p) {
+	public int action(Player p, StringBuilder sb) {
 		//moves the player again according to last score
 		int nPos=p.getLastScore()+p.getCurrPos();
+		sb.append("Il giocatore ha preso una molla e si sposta nuovamente di "+p.getLastScore()+'\n');
 		return nPos;
 		}
 

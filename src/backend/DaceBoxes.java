@@ -6,10 +6,11 @@ public enum DaceBoxes implements Element {
 	private int pos;
 
 	@Override
-	public int action(Player p) {
+	public int action(Player p, StringBuilder sb) {
 		System.out.println(p+" gets to throw daces!");
 		int q=p.throwDaces();
 		int pos=q+p.getCurrPos();
+		sb.append("Il giocatore lancia i dadi nuovamente ed ottiene "+q+'\n');
 		return pos;
 	}
 

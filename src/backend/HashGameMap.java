@@ -12,16 +12,10 @@ public enum HashGameMap implements GameMap {
 	
 	private Player[]  players;
 	
-	private int actualPlayer=0;
-	private int lastPlayer=0;
 	
 	private int daceRis;
+	private boolean doubleSix=false;
 	
-	@Override
-	public int getActualPlayer() {
-		return actualPlayer;
-	}
-
 	public void addNewElement(Element e) {
 		int pos=e.getActionPoint();
 		if(elements.containsKey(pos))throw new IllegalArgumentException("Can't put element in this position!");
@@ -37,7 +31,7 @@ public enum HashGameMap implements GameMap {
 	}
 	
 	
-	private int putPlayerIn(Player p, int pos) {
+	private int putPlayerIn(Player p, int pos, StringBuilder sb) {
 		/**
 		 * puts the player in his next position according to the element prensent in
 		 * position "pos", then returns the actual position
@@ -48,10 +42,20 @@ public enum HashGameMap implements GameMap {
 		if (e==null) {
 			return p.getCurrPos(); //empty position
 		}
-		int nPos=e.action(p);
-		if(nPos==p.getCurrPos())//no movement was made
-			return nPos;
-		return putPlayerIn(p, nPos);
+		int nPos=e.action(p, sb);
+		if(nPos>N) {
+			int margin=nPos-N;
+			nPos=N-margin;
+		}
+		else if(nPos==p.getCurrPos()){
+			//no movement was made
+			if(p.getLastScore()==12 && doubleSix) {
+				sb.append("Doppi dadi, il giocatore rilancia.");
+				playARound(p.getCardinal()-1);
+			}
+			else return nPos;
+		}
+		return putPlayerIn(p, nPos, sb);
 	}
 
 	@Override
@@ -68,30 +72,42 @@ public enum HashGameMap implements GameMap {
 		}
 		else if(e instanceof Rest ) return "LOCANDA";
 		else if(e instanceof Bench) return "PANCHINA";
+		else if(e instanceof CardBoxes) return "CARTE";
+		else if(e instanceof DaceBoxes) return "DADI";
+		else if(e instanceof Spring) return "MOLLA";
 		else return "";
 	}
 
 	@Override
-	public int playARound() {
-		Player p=players[actualPlayer];
-		actualPlayer=(++actualPlayer)%players.length;
+	public String playARound(int player) {
+		StringBuilder sb= new StringBuilder();
+		Player p=players[player];
+		int x=player+1;
+		sb.append("Tocca al giocatore "+x+'\n');
 		if(p.getRoundsToWait()!=0) {
 			System.out.println(p+" must wait "+p.getRoundsToWait()+" rounds to play");
+			sb.append(p+" deve attendere ancora "+p.getRoundsToWait()+" giri per giocare."+'\n');
 			p.setRoundsToWait(p.getRoundsToWait()-1);
-			return p.getCurrPos();
+			return sb.toString();
 		}
 		int ris=p.throwDaces();
 		daceRis=ris;
-		if(p.getCurrPos()+ris>N) ris=ris+p.getCurrPos()-N;
-		int nPos=p.getCurrPos()+ris;
-		lastPlayer=actualPlayer;
-		return putPlayerIn(p,nPos);
+		sb.append("Il giocatore "+x+" ha ottenuto "+ris+'\n');
+		p.setLastScore(ris);
+		int nPos;
+		if(p.getCurrPos()+ris>N) {
+			int margin=p.getCurrPos()+ris-N;
+			nPos=N-margin;
+		}
+		else{
+			nPos=p.getCurrPos()+ris;
+		}
+		putPlayerIn(p,nPos, sb);
+		return sb.toString();
 	}
+	
 
-	@Override
-	public int getLastPlayer() {
-		return lastPlayer;
-	}
+
 
 	@Override
 	public int getPlayerPosition(int player) {

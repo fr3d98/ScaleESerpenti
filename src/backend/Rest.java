@@ -7,14 +7,16 @@ public enum Rest implements Element {
 	private int pos;
 	
 	@Override
-	public int action(Player p) {
+	public int action(Player p, StringBuilder sb) {
 		if(p.hasNoStopCard()) {
 			p.noStopCardConsumed();
 			Deck.INSTANCE.putBackCard(Card.NOSTOP);
 			System.out.println(p+" has a No-stop card and keeps playing");
+			sb.append("Il giocatore ha la No-Stop card e continua a giocare."+'\n');
 		}else {
 			p.setRoundsToWait(3);
 			System.out.println(p+" must wait 3 rounds to play again");
+			sb.append("Il giocatore deve attendere 3 giri prima di giocare nuovamente."+'\n');
 		}
 		return p.getCurrPos();
 	}

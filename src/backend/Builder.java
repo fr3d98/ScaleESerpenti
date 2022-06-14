@@ -139,7 +139,8 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int top, bottom;
 			do {
-				top=r.nextInt(bound)+1; bottom=r.nextInt(bound)+1;
+				//snake's head can't be in last position
+				top=r.nextInt(bound); bottom=r.nextInt(bound)+1;
 			}while(top<=bottom || occupied.contains(top) || occupied.contains(bottom));
 			int[] pos= {bottom,top};
 			buildSnakes(pos);
@@ -155,7 +156,8 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int top, bottom;
 			do {
-				top=r.nextInt(bound)+1; bottom=r.nextInt(bound)+1;
+				//ladder bottom can't be in first position
+				top=r.nextInt(bound)+1; bottom=r.nextInt(bound-1)+2;
 			}while(top<=bottom || occupied.contains(top) || occupied.contains(bottom));
 			int[] pos= {bottom,top};
 			buildLadders(pos);
@@ -172,7 +174,7 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int pos;
 			do {
-				pos=r.nextInt(bound)+1;
+				pos=r.nextInt(bound-1)+1;
 			}while(occupied.contains(pos));
 			buildBenches(pos);
 		}
@@ -187,7 +189,7 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int pos;
 			do {
-				pos=r.nextInt(bound)+1;
+				pos=r.nextInt(bound-1)+1;
 			}while(occupied.contains(pos));
 			buildRests(pos);
 		}
@@ -202,7 +204,7 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int pos;
 			do {
-				pos=r.nextInt(bound)+1;
+				pos=r.nextInt(bound-1)+1;
 			}while(occupied.contains(pos));
 			buildDaceBoxes(pos);
 		}
@@ -217,7 +219,7 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int pos;
 			do {
-				pos=r.nextInt(bound)+1;
+				pos=r.nextInt(bound-1)+1;
 			}while(occupied.contains(pos));
 			buildCardBoxes(pos);
 		}
@@ -231,7 +233,7 @@ public class Builder implements BuilderIF{
 		for(int i=0; i<N; i++) {
 			int pos;
 			do {
-				pos=r.nextInt(bound)+1;
+				pos=r.nextInt(bound-1)+1;
 			}while(occupied.contains(pos));
 			buildSpringBoxes(pos);
 		}

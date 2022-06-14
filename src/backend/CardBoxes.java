@@ -7,22 +7,23 @@ public enum CardBoxes implements Element {
 	private int pos;
 	
 	@Override
-	public int action(Player p) {
+	public int action(Player p, StringBuilder sb) {
 		Card c= Deck.INSTANCE.pick();
 		System.out.println(p+" picks card "+c);
+		sb.append("Il giocatore pesca una carta: "+c+'\n');
 		switch (c) {
 		case BENCH:
 			Deck.INSTANCE.putBackCard(c);
-			return Bench.INSTANCE.action(p);
+			return Bench.INSTANCE.action(p,sb);
 		case REST:
 			Deck.INSTANCE.putBackCard(c);
-			return Rest.INSTANCE.action(p);
+			return Rest.INSTANCE.action(p,sb);
 		case SPRING:
 			Deck.INSTANCE.putBackCard(c);
-			return Spring.INSTANCE.action(p);
+			return Spring.INSTANCE.action(p,sb);
 		case DACES:
 			Deck.INSTANCE.putBackCard(c);
-			return DaceBoxes.INSTANCE.action(p);
+			return DaceBoxes.INSTANCE.action(p,sb);
 		case NOSTOP:
 			if(p.hasNoStopCard()) Deck.INSTANCE.putBackCard(c);
 			else

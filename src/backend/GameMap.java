@@ -3,11 +3,7 @@ public interface GameMap {
 	
 	public String getElementIn(int pos);
 	
-	public int playARound();
-	
-	public int getActualPlayer();
-	
-	public int getLastPlayer();
+	public String playARound(int player);
 	
 	public int getPlayerPosition(int player);
 	

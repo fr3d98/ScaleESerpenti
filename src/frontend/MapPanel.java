@@ -14,13 +14,20 @@ public class MapPanel extends JPanel {
 	private Box[] boxes;
 	private int players, N;
 	
-	public MapPanel(int rows, int cols) {
+	public MapPanel(int rows, int cols, int players) {
 		super();
+		if(rows>20 || cols >20 || players >10) {
+			/**
+			 * This is necessary so the GUI won't represent the map if it's too big.
+			 * A minimal UI is used instead and is still possible to understand the game.
+			 */
+			return;
+		}
 		setLayout(new GridLayout(rows, cols, 0, 0));
 		N=rows*cols;
 		boxes=new Box[N+1];
 		for(int i=1; i<=N; i++) {
-			boxes[i]=new Box();
+			boxes[i]=new Box(players);
 			boxes[i].setCardinal(i);
 			this.add(boxes[i]);
 		}
@@ -31,8 +38,8 @@ public class MapPanel extends JPanel {
 		boxes[pos].addPlayer(player);
 	}
 	
-	public void removePlayer(int pos) {
-		boxes[pos].clearPlayer();
+	public void removePlayer(int pos, int player) {
+		boxes[pos].clearPlayer(player);
 	}
 	
 

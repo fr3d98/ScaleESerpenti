@@ -6,7 +6,7 @@ abstract class Mover implements Element {
 	int top, bottom;
 
 	@Override
-	public abstract int action(Player p);
+	public abstract int action(Player p, StringBuilder sb);
 	
 	
 	@Override

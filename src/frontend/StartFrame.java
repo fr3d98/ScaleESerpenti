@@ -242,12 +242,16 @@ public class StartFrame extends JFrame {
 		int[] cards,springs,daces,benches,rests;
 		
 		private int getQuantity(String s) {
+			int ris;
 			try {
-				int ris=Integer.parseInt(s.trim());
+				ris = Integer.parseInt(s.trim());
+				if (ris < 0)
+					throw new IllegalArgumentException("Non si possono avere quantità negative!");
 				return ris;
-			}catch(NumberFormatException NFE) {
-				return 0;
-			}
+			} catch (IllegalArgumentException IAE) {
+				JOptionPane.showMessageDialog(rootPane, IAE);
+			} 
+		return 0;
 		}
 		
 		private int[][] takeMoverPositions(String element, int len){

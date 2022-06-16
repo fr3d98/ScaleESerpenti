@@ -37,7 +37,7 @@ public class StartFrame extends JFrame {
 	private JTextField fieldCards;
 	private JComboBox dacesComboBox;
 	private JCheckBox randomSnakes, randomLadders, randomBenches, randomCards, randomSprings,
-	randomDaces, randomRests;
+	randomDaces, randomRests, doubleSix;
 	
 	private BuilderIF builder;
 	private int nRows, nCols, nPlayers;
@@ -138,6 +138,14 @@ public class StartFrame extends JFrame {
 		dacesComboBox = new JComboBox();
 		dacesComboBox.setModel(new DefaultComboBoxModel(new String[] {"1", "2"}));
 		dacesComboBox.setBounds(106, 295, 42, 17);
+		dacesComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(dacesComboBox.getSelectedItem()=="1") doubleSix.setSelected(false);
+			}
+			
+		});
 		contentPane.add(dacesComboBox);
 		
 		JLabel lblNumero = new JLabel("Numero Caselle Panchine");
@@ -219,6 +227,18 @@ public class StartFrame extends JFrame {
 		randomCards.setBounds(225, 275, 197, 25);
 		contentPane.add(randomCards);
 		randomCards.setSelected(true);
+		
+		doubleSix = new JCheckBox("Doppio 6");
+		doubleSix.setBounds(12, 332, 114, 25);
+		doubleSix.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(doubleSix.isSelected()) dacesComboBox.setSelectedIndex(1);
+			}
+			
+		});
+		contentPane.add(doubleSix);
 	}
 	
 	
@@ -308,6 +328,7 @@ public class StartFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			nPlayers=getQuantity(fieldPlayers.getText());
 			nRows=getQuantity(fieldRows.getText());
 			nCols=getQuantity(fieldColumns.getText());
@@ -334,51 +355,49 @@ public class StartFrame extends JFrame {
 			builder.buildPlayers(nPlayers);
 			builder.buildDeck();
 			
-			if(randomSnakes.isSelected()) {
-				builder.buildSnakesRandom(nSnakes);
-			}else {
+			if(!randomSnakes.isSelected()) {
 				snakes=takeMoverPositions("Serpenti", nSnakes);
 				builder.buildSnakes(snakes);
 			}
-			if(randomLadders.isSelected()) {
-				builder.buildLaddersRandom(nLadders);
-			}else {
+			if(!randomLadders.isSelected()) {
 				ladders=takeMoverPositions("Scale", nLadders);
 				builder.buildLadders(ladders);
 			}
-			if(randomCards.isSelected()) {
-				builder.buildCardBoxesRandom(nCards);
-			}else {
+			if(!randomCards.isSelected()) {
 				cards=takePositions("Carte", nCards);
 				builder.buildCardBoxes(cards);
 			}
-			if(randomSprings.isSelected()) {
-				builder.buildSpringBoxesRandom(nSprings);
-			}else {
+			if(!randomSprings.isSelected()) {
 				springs=takePositions("Molle", nSprings);
 				builder.buildSpringBoxes(springs);
 			}
-			if(randomDaces.isSelected()) {
-				builder.buildDaceBoxesRandom(nDaceBoxes);
-			}else {
+			if(!randomDaces.isSelected()) {
 				daces=takePositions("Caselle Dadi", nDaceBoxes);
 				builder.buildDaceBoxes(daces);
 			}
-			if(randomBenches.isSelected()) {
-				builder.buildBenchesRandom(nBenches);
-			}else {
+			if(!randomBenches.isSelected()) {
 				benches=takePositions("Panchine", nBenches);
 				builder.buildBenches(benches);
 			}
-			if(randomRests.isSelected()) {
-				builder.buildRestsRandom(nRests);
-			}else {
+			if(!randomRests.isSelected()) {
 				rests=takePositions("Locande",nRests);
 				builder.buildRests(rests);
 			}
+			
+			if(randomSnakes.isSelected()) builder.buildSnakesRandom(nSnakes);
+			if(randomLadders.isSelected()) builder.buildLaddersRandom(nLadders);
+			if(randomCards.isSelected()) builder.buildCardBoxesRandom(nCards);
+			if(randomSprings.isSelected())builder.buildSpringBoxesRandom(nSprings);
+			if(randomDaces.isSelected()) builder.buildDaceBoxesRandom(nDaceBoxes);
+			if(randomBenches.isSelected()) builder.buildBenchesRandom(nBenches);
+			if(randomRests.isSelected()) builder.buildRestsRandom(nRests);
+			
+			if(doubleSix.isSelected()) builder.buildDoubleSix();
 			
 			openMainFrame();
 		}
 		
 	}
 }
+		
+	

@@ -18,6 +18,13 @@ class Player {
 		roundsToWait=0;
 	}
 	
+	public void reset() {
+		currPos=1;
+		noStopCard=false;
+		lastPos=0;
+		roundsToWait=0;
+	}
+	
 	public int throwDaces() {
 		//player consumes a round throwing daces
 		/*

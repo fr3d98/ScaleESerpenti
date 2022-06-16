@@ -248,4 +248,10 @@ public class Builder implements BuilderIF{
 		
 		b.buildSpace(10, 10);
 	}
+
+
+	@Override
+	public void buildDoubleSix() {
+		HashGameMap.INSTANCE.enableDoubleSix();
+	}
 }

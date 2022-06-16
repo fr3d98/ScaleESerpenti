@@ -1,5 +1,8 @@
 package frontend;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import backend.Builder;
@@ -7,6 +10,10 @@ import backend.BuilderIF;
 import backend.GameMap;
 
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MapPanel extends JPanel {
 	
@@ -19,8 +26,15 @@ public class MapPanel extends JPanel {
 		if(rows>20 || cols >20 || players >10) {
 			/**
 			 * This is necessary so the GUI won't represent the map if it's too big.
-			 * A minimal UI is used instead and is still possible to understand the game.
+			 * A minimal UI is used instead and it's still possible to understand the game.
 			 */
+			try {
+				BufferedImage img= ImageIO.read(this.getClass().getResource("/SnakesAndLaddersLogo.jpg"));
+				JLabel imglbl=new JLabel(new ImageIcon(img.getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
+				this.add(imglbl);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return;
 		}
 		setLayout(new GridLayout(rows, cols, 0, 0));

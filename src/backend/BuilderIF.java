@@ -21,6 +21,7 @@ public interface BuilderIF {
 	public void buildDaceBoxes(int ...pos);
 	public void buildCardBoxes(int ...pos);
 	public void buildSpringBoxes(int ...pos);
+	public void buildDoubleSix();
 	public Daces buildDaces(int N);
 	public Deck buildDeck();
 	

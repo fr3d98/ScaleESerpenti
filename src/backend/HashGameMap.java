@@ -30,6 +30,10 @@ public enum HashGameMap implements GameMap {
 		this.players=players;
 	}
 	
+	public void enableDoubleSix() {
+		doubleSix=true;
+	}
+	
 	
 	private int putPlayerIn(Player p, int pos, StringBuilder sb) {
 		/**
@@ -47,13 +51,9 @@ public enum HashGameMap implements GameMap {
 			int margin=nPos-N;
 			nPos=N-margin;
 		}
-		else if(nPos==p.getCurrPos()){
+		else if(nPos==p.getCurrPos()) {
 			//no movement was made
-			if(p.getLastScore()==12 && doubleSix) {
-				sb.append("Doppi dadi, il giocatore rilancia.");
-				playARound(p.getCardinal()-1);
-			}
-			else return nPos;
+			return nPos;
 		}
 		return putPlayerIn(p, nPos, sb);
 	}
@@ -83,7 +83,7 @@ public enum HashGameMap implements GameMap {
 		StringBuilder sb= new StringBuilder();
 		Player p=players[player];
 		int x=player+1;
-		sb.append("Tocca al giocatore "+x+'\n');
+		sb.append("Tocca al giocatore "+x+" in posizione "+p.getCurrPos()+'\n');
 		if(p.getRoundsToWait()!=0) {
 			System.out.println(p+" must wait "+p.getRoundsToWait()+" rounds to play");
 			sb.append(p+" deve attendere ancora "+p.getRoundsToWait()+" giri per giocare."+'\n');
@@ -93,7 +93,6 @@ public enum HashGameMap implements GameMap {
 		int ris=p.throwDaces();
 		daceRis=ris;
 		sb.append("Il giocatore "+x+" ha ottenuto "+ris+'\n');
-		p.setLastScore(ris);
 		int nPos;
 		if(p.getCurrPos()+ris>N) {
 			int margin=p.getCurrPos()+ris-N;
@@ -103,6 +102,10 @@ public enum HashGameMap implements GameMap {
 			nPos=p.getCurrPos()+ris;
 		}
 		putPlayerIn(p,nPos, sb);
+		if(p.getLastScore()==12 && doubleSix) {
+			sb.append("Doppio 6, il giocatore rilancia."+'\n');
+			sb.append(playARound(p.getCardinal()-1));
+		}
 		return sb.toString();
 	}
 	
@@ -122,6 +125,11 @@ public enum HashGameMap implements GameMap {
 	@Override
 	public boolean isPlayerBlocked(int player) {
 		return players[player].getRoundsToWait()!=0;
+	}
+
+	@Override
+	public void restart() {
+		for(Player p : players) p.reset();
 	}
 	
 	

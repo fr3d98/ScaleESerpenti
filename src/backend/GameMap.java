@@ -10,5 +10,7 @@ public interface GameMap {
 	public int getDaceRis();
 	
 	public boolean isPlayerBlocked(int player);
+	
+	public void restart();
 
 }

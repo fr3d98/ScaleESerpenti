@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.BoxLayout;
 import javax.swing.DropMode;
 
 public class MainFrame extends JFrame {
@@ -35,7 +36,7 @@ public class MainFrame extends JFrame {
 	private JTextField eventiField;
 	private GameMap gameMap;
 	private int toPlay=0;
-	private boolean WON;
+	private boolean WON=false;
 	/**
 	 * Create the frame.
 	 */
@@ -68,7 +69,7 @@ public class MainFrame extends JFrame {
 		
 		btnAutomatic = new JButton("Automatic");
 		btnNext = new JButton("Next>");
-		
+
 		btnAutomatic.addActionListener(new ActionListener() {
 
 			@Override
@@ -97,11 +98,13 @@ public class MainFrame extends JFrame {
 		});
 		
 		MapPanel mapPanel = new MapPanel(rows, cols, nPlayers);
-		JPanel eventsPanel= new JPanel();
-		JScrollPane scrollEvent= new JScrollPane(eventsPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		events=new JTextArea();
+		events.setEditable(false);
+		
+		JScrollPane scrollEvent= new JScrollPane(events, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		JScrollPane scroll=new JScrollPane(mapPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		
+
 		eventiField = new JTextField();
 		eventiField.setEditable(false);
 		eventiField.setColumns(10);
@@ -133,14 +136,8 @@ public class MainFrame extends JFrame {
 							.addGap(29)
 							.addComponent(btnRestart)
 							.addGap(13))
-						.addComponent(scrollEvent, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(0))
+						.addComponent(scrollEvent, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
 		);
-		events = new JTextArea();
-		events.setRows(7);
-		events.setColumns(40);
-		events.setEditable(false);
-		eventsPanel.add(events);
 		mapPanel.setLayout(new GridLayout(cols, rows, 0, 0));
 		contentPane.setLayout(gl_contentPane);
 		boxes=mapPanel.getBoxes();
@@ -218,7 +215,13 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void restart() {
-		
+		gameMap.restart();
+		WON=false;
+		btnAutomatic.setEnabled(true);
+		btnNext.setEnabled(true);
+		btnRestart.setEnabled(false);
+		events.setText("");
+		toPlay=0; rounds=1;
 	}
 	
 }

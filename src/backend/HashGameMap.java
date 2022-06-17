@@ -6,7 +6,7 @@ public enum HashGameMap implements GameMap {
 	
 	INSTANCE;
 	
-	private int N; //number of positions
+	private int N, nRows, nCols, rounds=1, lastPlayer=-1; //number of positions
 
 	private Map<Integer, Element> elements= new HashMap<>();
 	
@@ -82,6 +82,7 @@ public enum HashGameMap implements GameMap {
 	public String playARound(int player) {
 		StringBuilder sb= new StringBuilder();
 		Player p=players[player];
+		lastPlayer=player;
 		int x=player+1;
 		sb.append("Tocca al giocatore "+x+" in posizione "+p.getCurrPos()+'\n');
 		if(p.getRoundsToWait()!=0) {
@@ -131,8 +132,62 @@ public enum HashGameMap implements GameMap {
 	public void restart() {
 		for(Player p : players) p.reset();
 	}
-	
-	
-	
 
+	@Override
+	public int getPlayersNumber() {
+		return players.length;
+	}
+
+	@Override
+	public int getnRows() {
+		return nRows;
+	}
+
+	@Override
+	public int getnCols() {
+		return nCols;
+	}
+
+	public void setnRows(int nRows) {
+		this.nRows = nRows;
+	}
+
+	public void setnCols(int nCols) {
+		this.nCols = nCols;
+	}
+
+	@Override
+	public int getRounds() {
+		return rounds;
+	}
+
+	public void setRounds(int rounds) {
+		this.rounds = rounds;
+	}
+
+	@Override
+	public int getLastPlayer() {
+		return lastPlayer;
+	}
+
+	@Override
+	public GameMapState save() {
+		return new GameMapState(N, elements, doubleSix, players, daceRis, nRows, nCols, rounds);
+	}
+
+	@Override
+	public void restore(GameMapState gms) {
+		this.N=gms.getN();
+		this.elements=gms.getElements();
+		this.doubleSix=gms.isDoubleSix();
+		this.players=gms.getPlayers();
+		this.daceRis=gms.getDaceRis();
+		this.rounds=gms.getRounds();
+		this.nRows=gms.getnRows();
+		this.nCols=gms.getnCols();
+		this.rounds=gms.getRounds();
+	}
+	
+	
+	
 }

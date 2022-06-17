@@ -4,15 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import backend.Builder;
-import backend.BuilderIF;
-import backend.GameMap;
-
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 public class MapPanel extends JPanel {

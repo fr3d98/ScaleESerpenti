@@ -6,6 +6,7 @@ public enum Daces {
 	
 	private int N; //Defines the number of the daces
 	private Random r= new Random();
+	private int dimension;
 	
 	void setNumberOfDaces(int n) {
 		if(n!=1 && n!=2)
@@ -17,11 +18,14 @@ public enum Daces {
 		if(N!=1 && N!=2) 
 			throw new IllegalStateException("Number of daces must be set first!");
 		int ris;
-		if(N==1 || p.getCurrPos()>=94)
+		if(N==1 || p.getCurrPos()>=(dimension-6))
 			ris= r.nextInt(6)+1;
 		else ris= r.nextInt(6)+r.nextInt(6)+2;
 		System.out.println(p+ " throws daces and gets "+ris);
 		return ris;
 	}
 
+	void setMapDimension(int dimension) {
+		this.dimension=dimension;
+	}
 }

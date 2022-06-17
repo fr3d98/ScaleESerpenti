@@ -24,6 +24,8 @@ public class Builder implements BuilderIF{
 	public int buildSpace(int rows, int columns) {
 		int n= rows*columns;
 		HashGameMap.INSTANCE.setN(n);
+		HashGameMap.INSTANCE.setnCols(columns);
+		HashGameMap.INSTANCE.setnRows(rows);
 		occupied=new HashSet<>(n);
 		bound=n;
 		return n;
@@ -104,7 +106,9 @@ public class Builder implements BuilderIF{
 	public Daces buildDaces(int N) {
 		if(N!=1 && N!=2)
 			throw new IllegalArgumentException("You can play only with one or thwo daces!");
+		if(bound==0)throw new IllegalStateException("Must create space first!");
 		Daces.INSTANCE.setNumberOfDaces(N);
+		Daces.INSTANCE.setMapDimension(bound);
 		return Daces.INSTANCE;
 		
 	}

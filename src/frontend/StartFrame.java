@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 
 import backend.Builder;
 import backend.BuilderIF;
-import backend.GameMap;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -35,6 +34,7 @@ public class StartFrame extends JFrame {
 	private JTextField fieldRest;
 	private JTextField fieldDace;
 	private JTextField fieldCards;
+	@SuppressWarnings("rawtypes")
 	private JComboBox dacesComboBox;
 	private JCheckBox randomSnakes, randomLadders, randomBenches, randomCards, randomSprings,
 	randomDaces, randomRests, doubleSix;
@@ -66,6 +66,7 @@ public class StartFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public StartFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -246,7 +247,7 @@ public class StartFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame mf= new MainFrame(nRows, nCols, nPlayers, builder.getGameMap());
+					MainFrame mf= new MainFrame(builder.getGameMap());
 					mf.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();

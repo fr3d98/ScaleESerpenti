@@ -14,13 +14,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.BoxLayout;
-import javax.swing.DropMode;
 
 public class MainFrame extends JFrame {
 
@@ -32,34 +29,28 @@ public class MainFrame extends JFrame {
 	
 	private Box[] boxes;
 
-	private int rows, cols, N, nPlayers, rounds=1;
+	private int rows, cols, N, nPlayers;
 	private JTextField eventiField;
 	private GameMap gameMap;
-	private int toPlay=0;
+	private int lastPlayer;
 	private boolean WON=false;
+	
 	/**
 	 * Create the frame.
-	 */
-	
-	public static void main(String...args) {
-		try {
-			MainFrame mf= new MainFrame(10,10,4, null);
-			mf.setVisible(true);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public MainFrame(int rows, int cols, int nPlayers, GameMap gameMap) {
-		if(rows<=0 || cols <=0)
-			throw new IllegalArgumentException("Rows and Columns can't be negative or zero.");
+	 */	
+	public MainFrame(GameMap gameMap) {
 		if(gameMap==null)
 			throw new IllegalArgumentException("GameMap cannot be null.");
+		rows=gameMap.getnRows(); System.out.println("righe "+rows);
+		cols=gameMap.getnCols(); System.out.println("cols "+cols);
+		this.gameMap=gameMap;
+		lastPlayer=gameMap.getLastPlayer();
+		nPlayers=gameMap.getPlayersNumber(); System.out.println("players "+nPlayers);
+		if(rows<=0 || cols <=0)
+			throw new IllegalArgumentException("Rows and Columns can't be negative or zero.");
 		if(nPlayers<=0)
 			throw new IllegalArgumentException("Players needed");
-		this.rows=rows; this.cols=cols; this.gameMap=gameMap;
-		this.N=rows*cols; this.nPlayers=nPlayers;
+		this.N=rows*cols;
 		setTitle("Scale E Serpenti");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 661, 548);
@@ -174,25 +165,26 @@ public class MainFrame extends JFrame {
 	}
 	
 	private void playARound() {
-		int lastPos=gameMap.getPlayerPosition(toPlay);
-		String event=gameMap.playARound(toPlay);
-		int x=toPlay+1;
-		if(toPlay==0) {
+		if(lastPlayer==nPlayers-1) lastPlayer=0;
+		else lastPlayer++;
+		int lastPos=gameMap.getPlayerPosition(lastPlayer);
+		String event=gameMap.playARound(lastPlayer);
+		int x=lastPlayer+1;
+		/**if(toPlay==0) {
 			events.append("ROUND "+rounds+'\n');
 			rounds++;
-		}
+		}*/
 		events.append(event);
 		events.append(""+'\n');
-		int pos=gameMap.getPlayerPosition(toPlay);
+		int pos=gameMap.getPlayerPosition(lastPlayer);
 		if(boxes!=null)
-			boxes[pos].addPlayer(toPlay);
+			boxes[pos].addPlayer(lastPlayer);
 		if(pos!=lastPos && boxes!=null)//se non ci sono stati movimenti lascia il giocatore dov'è
-			boxes[lastPos].clearPlayer(toPlay);
+			boxes[lastPos].clearPlayer(lastPlayer);
 		if(pos==N) {
 			won();
 			JOptionPane.showMessageDialog(contentPane, "Il giocatore "+x+" ha vinto!");
 		}
-		toPlay=(++toPlay)%nPlayers;
 	}
 	
 	private void automatic() {
@@ -221,7 +213,7 @@ public class MainFrame extends JFrame {
 		btnNext.setEnabled(true);
 		btnRestart.setEnabled(false);
 		events.setText("");
-		toPlay=0; rounds=1;
+		lastPlayer=0;
 	}
 	
 }

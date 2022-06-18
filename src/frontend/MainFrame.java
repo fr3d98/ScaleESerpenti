@@ -10,7 +10,14 @@ import backend.GameMap;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
@@ -18,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JMenuBar;
 
 public class MainFrame extends JFrame {
 
@@ -34,6 +42,8 @@ public class MainFrame extends JFrame {
 	private GameMap gameMap;
 	private int lastPlayer;
 	private boolean WON=false;
+	private JMenuBar menuBar;
+	private JButton btnSalva;
 	
 	/**
 	 * Create the frame.
@@ -54,6 +64,38 @@ public class MainFrame extends JFrame {
 		setTitle("Scale E Serpenti");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 661, 548);
+		
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		btnSalva = new JButton("Salva");
+		btnSalva.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				int res = jfc.showSaveDialog(null);
+				if(res==JFileChooser.APPROVE_OPTION) {
+					File f = jfc.getSelectedFile();
+					if(f.exists())
+						if(JOptionPane.showConfirmDialog(jfc, "Sovrascrivere "+f.getName()+" ?")==JOptionPane.OK_OPTION);
+						else return;
+					String name= f.getAbsolutePath();
+					if(!name.endsWith(".dat")) name+=".dat";
+					try {
+						FileOutputStream fos= new FileOutputStream(name);
+						ObjectOutputStream oos= new ObjectOutputStream(fos);
+						oos.writeObject(gameMap.save());
+						oos.close(); fos.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+						
+				}
+			}
+			
+		});
+		menuBar.add(btnSalva);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -129,7 +171,7 @@ public class MainFrame extends JFrame {
 							.addGap(13))
 						.addComponent(scrollEvent, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)))
 		);
-		mapPanel.setLayout(new GridLayout(cols, rows, 0, 0));
+		mapPanel.setLayout(new GridLayout(rows, cols, 0, 0));
 		contentPane.setLayout(gl_contentPane);
 		boxes=mapPanel.getBoxes();
 		if (boxes!=null) {

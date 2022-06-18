@@ -1,7 +1,8 @@
 package backend;
+import java.io.Serializable;
 import java.util.Random;
 
-public enum Daces {
+public enum Daces implements Serializable{
 	INSTANCE;
 	
 	private int N; //Defines the number of the daces

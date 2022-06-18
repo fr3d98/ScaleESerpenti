@@ -1,8 +1,10 @@
 package backend;
+import java.io.Serializable;
 import java.util.Set;
 
-abstract class Mover implements Element {
+abstract class Mover implements Element, Serializable {
 	
+	private static final long serialVersionUID = -9122825500222884053L;
 	int top, bottom;
 
 	@Override

@@ -1,5 +1,6 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.Map;
 
 public interface GameMap {
@@ -30,8 +31,9 @@ public interface GameMap {
 	
 	public void restore(GameMapState gms);
 	
-	class GameMapState{
-		private int N, nRows, nCols, rounds;
+	class GameMapState implements Serializable{
+		private static final long serialVersionUID = 3606904805372695279L;
+		private int N, nRows, nCols, rounds , nDaces;
 		private Map<Integer, Element> elements;
 		
 
@@ -39,12 +41,13 @@ public interface GameMap {
 		private Player[] players;
 		private int daceRis;
 		
-		public GameMapState(int N, Map<Integer, Element> elements, boolean doubleSix, Player[] players, int daceRis
+		public GameMapState(int N, Map<Integer, Element> elements, boolean doubleSix, Player[] players, int daceRis, int nDaces
 				,int rows, int cols, int rounds) {
 			this.N=N; this.daceRis=daceRis;
 			this.elements=elements; this.doubleSix=doubleSix;
 			this.players=players;
 			this.nCols=cols; this.nRows=rows; this.rounds=rounds;
+			this.nDaces=nDaces;
 		}
 
 		public int getN() {
@@ -80,6 +83,9 @@ public interface GameMap {
 
 		public int getnCols() {
 			return nCols;
+		}
+		public int getnDaces() {
+			return nDaces;
 		}
 			
 	}

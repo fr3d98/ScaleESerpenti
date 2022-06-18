@@ -109,6 +109,7 @@ public class Builder implements BuilderIF{
 		if(bound==0)throw new IllegalStateException("Must create space first!");
 		Daces.INSTANCE.setNumberOfDaces(N);
 		Daces.INSTANCE.setMapDimension(bound);
+		HashGameMap.INSTANCE.setnDaces(N);
 		return Daces.INSTANCE;
 		
 	}

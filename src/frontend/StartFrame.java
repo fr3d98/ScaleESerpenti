@@ -4,21 +4,33 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import backend.Builder;
 import backend.BuilderIF;
+import backend.GameMap;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
+import javax.swing.JMenuBar;
 
 public class StartFrame extends JFrame {
 
@@ -68,9 +80,44 @@ public class StartFrame extends JFrame {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public StartFrame() {
+		setTitle("Scale E Serpenti");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 449, 454);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JButton loadBtn = new JButton("Carica da File");
+		loadBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jfc = new JFileChooser();
+				FileFilter ff = new FileNameExtensionFilter("Data File", "dat");
+				jfc.setFileFilter(ff);
+				int result=jfc.showSaveDialog(null);
+				if(result==JFileChooser.APPROVE_OPTION) {
+					try {
+						File f = jfc.getSelectedFile();
+						FileInputStream fis= new FileInputStream(f);
+						ObjectInputStream ois= new ObjectInputStream(fis);
+						Object o=ois.readObject();
+						ois.close(); fis.close();
+						if(!(o instanceof GameMap.GameMapState)) throw new IllegalStateException("File corrupt.");
+						GameMap.GameMapState gms= (GameMap.GameMapState) o;
+						builder=new Builder();
+						GameMap gm= builder.getGameMap();
+						gm.restore(gms);
+						openMainFrame(gm);
+					}catch(IOException | ClassNotFoundException ex) {
+						ex.printStackTrace();
+					}
+				}
+			}
+			
+		});
+		menuBar.add(loadBtn);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -243,11 +290,11 @@ public class StartFrame extends JFrame {
 	}
 	
 	
-	private void openMainFrame() {
+	private void openMainFrame(GameMap gm) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainFrame mf= new MainFrame(builder.getGameMap());
+					MainFrame mf= new MainFrame(gm);
 					mf.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -395,7 +442,7 @@ public class StartFrame extends JFrame {
 			
 			if(doubleSix.isSelected()) builder.buildDoubleSix();
 			
-			openMainFrame();
+			openMainFrame(builder.getGameMap());
 		}
 		
 	}

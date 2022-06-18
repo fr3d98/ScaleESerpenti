@@ -1,7 +1,7 @@
 package backend;
 import java.util.Set;
 
-interface Element {
+interface Element{
 	
 	int action(Player p, StringBuilder sb);
 	

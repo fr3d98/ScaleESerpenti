@@ -6,7 +6,7 @@ public enum HashGameMap implements GameMap {
 	
 	INSTANCE;
 	
-	private int N, nRows, nCols, rounds=1, lastPlayer=-1; //number of positions
+	private int N, nRows, nCols, rounds=1, lastPlayer=-1, nDaces; //number of positions
 
 	private Map<Integer, Element> elements= new HashMap<>();
 	
@@ -172,7 +172,7 @@ public enum HashGameMap implements GameMap {
 
 	@Override
 	public GameMapState save() {
-		return new GameMapState(N, elements, doubleSix, players, daceRis, nRows, nCols, rounds);
+		return new GameMapState(N, elements, doubleSix, players, daceRis,nDaces, nRows, nCols, rounds);
 	}
 
 	@Override
@@ -186,6 +186,12 @@ public enum HashGameMap implements GameMap {
 		this.nRows=gms.getnRows();
 		this.nCols=gms.getnCols();
 		this.rounds=gms.getRounds();
+		this.nDaces=gms.getnDaces();
+		Daces.INSTANCE.setNumberOfDaces(nDaces);
+	}
+
+	public void setnDaces(int nDaces) {
+		this.nDaces = nDaces;
 	}
 	
 	

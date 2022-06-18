@@ -1,7 +1,10 @@
 package backend;
 
-class Player {
+import java.io.Serializable;
+
+class Player implements Serializable{
 	
+	private static final long serialVersionUID = 7937254411535277933L;
 	private int currPos; //posizione corrente
 	private int lastPos; //posizione precedente
 	private int cardinal; //posizione cardinale

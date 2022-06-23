@@ -20,11 +20,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -83,7 +80,7 @@ public class StartFrame extends JFrame {
 		setTitle("Scale E Serpenti");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 449, 454);
+		setBounds(100, 100, 449, 476);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -96,7 +93,7 @@ public class StartFrame extends JFrame {
 				JFileChooser jfc = new JFileChooser();
 				FileFilter ff = new FileNameExtensionFilter("Data File", "dat");
 				jfc.setFileFilter(ff);
-				int result=jfc.showSaveDialog(null);
+				int result=jfc.showOpenDialog(null);
 				if(result==JFileChooser.APPROVE_OPTION) {
 					try {
 						File f = jfc.getSelectedFile();

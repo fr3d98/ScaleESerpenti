@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import backend.GameMap;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -15,8 +18,10 @@ public class MapPanel extends JPanel {
 	private Box[] boxes;
 	private int players, N;
 	
-	public MapPanel(int rows, int cols, int players) {
+	public MapPanel(GameMap gm) {
 		super();
+		if(gm==null)throw new IllegalArgumentException("GameMap cannot be null!");
+		int rows=gm.getnRows(); int cols=gm.getnCols(); int players=gm.getPlayersNumber();
 		if(rows>20 || cols >20 || players >10) {
 			/**
 			 * This is necessary so the GUI won't represent the map if it's too big.

@@ -6,7 +6,7 @@ public enum HashGameMap implements GameMap {
 	
 	INSTANCE;
 	
-	private int N, nRows, nCols, rounds=1, lastPlayer=-1, nDaces; //number of positions
+	private int N, nRows, nCols, lastPlayer=-1, nDaces, nRounds=1, actPlayer=0;
 
 	private Map<Integer, Element> elements= new HashMap<>();
 	
@@ -32,6 +32,11 @@ public enum HashGameMap implements GameMap {
 	
 	public void enableDoubleSix() {
 		doubleSix=true;
+	}
+	
+	@Override
+	public boolean isDoubleSix() {
+		return doubleSix;
 	}
 	
 	
@@ -78,8 +83,7 @@ public enum HashGameMap implements GameMap {
 		else return "";
 	}
 
-	@Override
-	public String playARound(int player) {
+	private String playARoundPriv(int player) {
 		StringBuilder sb= new StringBuilder();
 		Player p=players[player];
 		lastPlayer=player;
@@ -105,11 +109,19 @@ public enum HashGameMap implements GameMap {
 		putPlayerIn(p,nPos, sb);
 		if(p.getLastScore()==12 && doubleSix) {
 			sb.append("Doppio 6, il giocatore rilancia."+'\n');
-			sb.append(playARound(p.getCardinal()-1));
+			sb.append(playARoundPriv(p.getCardinal()-1));
 		}
 		return sb.toString();
 	}
 	
+	@Override
+	public String playARound() {
+		if(actPlayer==players.length-1)nRounds++;
+		String s=playARoundPriv(actPlayer);
+		lastPlayer=actPlayer;
+		actPlayer=(++actPlayer)%players.length;
+		return s;
+	}
 
 
 
@@ -158,21 +170,16 @@ public enum HashGameMap implements GameMap {
 
 	@Override
 	public int getRounds() {
-		return rounds;
+		return nRounds;
 	}
 
 	public void setRounds(int rounds) {
-		this.rounds = rounds;
-	}
-
-	@Override
-	public int getLastPlayer() {
-		return lastPlayer;
+		this.nRounds = rounds;
 	}
 
 	@Override
 	public GameMapState save() {
-		return new GameMapState(N, elements, doubleSix, players, daceRis,nDaces, nRows, nCols, rounds);
+		return new GameMapState(N, elements, doubleSix, players, daceRis,nDaces, nRows, nCols, nRounds, lastPlayer, actPlayer);
 	}
 
 	@Override
@@ -182,16 +189,29 @@ public enum HashGameMap implements GameMap {
 		this.doubleSix=gms.isDoubleSix();
 		this.players=gms.getPlayers();
 		this.daceRis=gms.getDaceRis();
-		this.rounds=gms.getRounds();
+		this.nRounds=gms.getRounds();
 		this.nRows=gms.getnRows();
 		this.nCols=gms.getnCols();
-		this.rounds=gms.getRounds();
+		this.nRounds=gms.getRounds();
 		this.nDaces=gms.getnDaces();
+		this.lastPlayer=gms.getLastPlayer();
+		this.actPlayer=gms.getActPlayer();
 		Daces.INSTANCE.setNumberOfDaces(nDaces);
+		Deck.INSTANCE.setDeck(gms.getDeck());
 	}
 
 	public void setnDaces(int nDaces) {
 		this.nDaces = nDaces;
+	}
+
+	@Override
+	public int getActPlayer() {
+		return actPlayer;
+	}
+
+	@Override
+	public int getnDaces() {
+		return nDaces;
 	}
 	
 	

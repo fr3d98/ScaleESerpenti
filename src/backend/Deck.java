@@ -10,6 +10,13 @@ public enum Deck {
 	
 	private List<Card> deck=new LinkedList<>();
 	
+	public void setDeck(List<Card> deck) {
+		this.deck=deck;
+	}
+	public List<Card> getDeck(){
+		return deck;
+	}
+	
 	void generateDeck() {
 		for(int i=0; i<5; i++)
 			for(int j=0; j<N/5; j++) {

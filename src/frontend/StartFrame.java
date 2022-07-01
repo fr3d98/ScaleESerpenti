@@ -23,6 +23,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.DefaultComboBoxModel;
@@ -328,6 +330,7 @@ public class StartFrame extends JFrame {
 					String[] a = s.split(" ");
 					if(a.length!=len)
 						throw new IllegalArgumentException("Elements number mismatch.");
+					Set<Integer> values= new HashSet<>();
 					int[][] ris=new int[a.length][2];
 					for(int i=0; i<a.length; i++) {
 						String [] part= a[i].trim().split(",");
@@ -336,8 +339,10 @@ public class StartFrame extends JFrame {
 							int val=Integer.parseInt(part[j]);
 							if(val<=0 || val> nRows*nCols)throw new IllegalArgumentException("Must enter a valid value.");
 							ris[i][j]=val;
-							Arrays.sort(ris[i]);
+							if(values.contains(val))throw new IllegalArgumentException("Values must be unique.");
+							values.add(val);
 						}
+						Arrays.sort(ris[i]);
 					}
 					inError=false;
 					return ris;
@@ -359,8 +364,13 @@ public class StartFrame extends JFrame {
 					String[] a =s.split(" ");
 					if(a.length!=len)
 						throw new IllegalArgumentException("Length mismatch.");
+					Set<Integer> values= new HashSet<>();
 					int[] pos=new int[len];
-					for(int i=0; i<len; i++) pos[i]=Integer.parseInt(a[i]);
+					for(int i=0; i<len; i++) {
+						pos[i]=Integer.parseInt(a[i]);
+						if(values.contains(pos[i]))throw new IllegalArgumentException("Values must be unique!");
+						values.add(pos[i]);
+					}
 					inError=false;
 					return pos;
 				}catch(IllegalArgumentException IAE) {
@@ -401,32 +411,97 @@ public class StartFrame extends JFrame {
 			builder.buildDeck();
 			
 			if(!randomSnakes.isSelected()) {
-				snakes=takeMoverPositions("Serpenti", nSnakes);
-				builder.buildSnakes(snakes);
+				boolean inError=false;
+				do {
+					try {
+						snakes = takeMoverPositions("Serpenti", nSnakes);
+						builder.buildSnakes(snakes);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
+			
 			if(!randomLadders.isSelected()) {
-				ladders=takeMoverPositions("Scale", nLadders);
-				builder.buildLadders(ladders);
+				boolean inError=false;
+				do {
+					try {
+						ladders=takeMoverPositions("Scale", nLadders);
+						builder.buildLadders(ladders);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
+			
 			if(!randomCards.isSelected()) {
-				cards=takePositions("Carte", nCards);
-				builder.buildCardBoxes(cards);
+				boolean inError=false;
+				do {
+					try {
+						cards=takePositions("Carte", nCards);
+						builder.buildCardBoxes(cards);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
 			if(!randomSprings.isSelected()) {
-				springs=takePositions("Molle", nSprings);
-				builder.buildSpringBoxes(springs);
+				boolean inError=false;
+				do {
+					try {
+						springs=takePositions("Molle", nSprings);
+						builder.buildSpringBoxes(springs);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
 			if(!randomDaces.isSelected()) {
-				daces=takePositions("Caselle Dadi", nDaceBoxes);
-				builder.buildDaceBoxes(daces);
+				boolean inError=false;
+				do {
+					try {
+						daces=takePositions("Caselle Dadi", nDaceBoxes);
+						builder.buildDaceBoxes(daces);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
 			if(!randomBenches.isSelected()) {
-				benches=takePositions("Panchine", nBenches);
-				builder.buildBenches(benches);
+				boolean inError=false;
+				do {
+					try {
+						benches=takePositions("Panchine", nBenches);
+						builder.buildBenches(benches);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
 			if(!randomRests.isSelected()) {
-				rests=takePositions("Locande",nRests);
-				builder.buildRests(rests);
+				boolean inError=false;
+				do {
+					try {
+						rests=takePositions("Locande",nRests);
+						builder.buildRests(rests);
+						inError=false;
+					} catch (IllegalArgumentException IAE) {
+						inError=true;
+						JOptionPane.showMessageDialog(rootPane, IAE);
+					}
+				} while (inError);
 			}
 			
 			if(randomSnakes.isSelected()) builder.buildSnakesRandom(nSnakes);

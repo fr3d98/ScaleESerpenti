@@ -14,9 +14,11 @@ abstract class Mover implements Element, Serializable {
 	@Override
 	public void locateElement(Set<Integer> set, int ... pos) {
 		top=pos[1]; bottom=pos[0];
-		if(top<=bottom || set.contains(top) || set.contains(bottom)) {
-			throw new IllegalArgumentException("Position already taken! Choose differently.");
+		if(top<=bottom ) {
+			throw new IllegalArgumentException("top must be greater than bottom");
 		}
+		if(set.contains(top) || set.contains(bottom))
+			throw new IllegalArgumentException("Position already taken! Choose differently.");
 		this.setTop(top); this.setBottom(bottom);
 		set.add(top); set.add(bottom);
 		System.out.println("Mover located in top: "+top+ "and bottom: "+bottom);

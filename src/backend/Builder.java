@@ -248,13 +248,6 @@ public class Builder implements BuilderIF{
 		return occupied;
 	}
 	
-	public static void main(String[] args) {
-		Builder b=new Builder();
-		
-		b.buildSpace(10, 10);
-	}
-
-
 	@Override
 	public void buildDoubleSix() {
 		HashGameMap.INSTANCE.enableDoubleSix();

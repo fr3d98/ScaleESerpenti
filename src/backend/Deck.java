@@ -59,18 +59,4 @@ public enum Deck {
 		sb.append("_____________");
 		return sb.toString();
 	}
-	
-	
-	public static void main(String[]args) {
-		Deck d= Deck.INSTANCE;
-		d.generateDeck();
-		System.out.print(d);
-		
-		System.out.println(d.pick());
-	
-		System.out.println(d);
-	}
-	
-	
-
 }

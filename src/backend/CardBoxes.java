@@ -9,7 +9,6 @@ public enum CardBoxes implements Element {
 	@Override
 	public int action(Player p, StringBuilder sb) {
 		Card c= Deck.INSTANCE.pick();
-		System.out.println(p+" picks card "+c);
 		sb.append("Il giocatore pesca una carta: "+c+'\n');
 		switch (c) {
 		case BENCH:
@@ -43,7 +42,6 @@ public enum CardBoxes implements Element {
 			throw new IllegalArgumentException("Positon already used, choose differently.");
 		this.pos=p;
 		set.add(p);
-		System.out.println("CardBox located in "+p);
 	}
 
 	@Override

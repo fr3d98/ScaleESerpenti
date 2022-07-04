@@ -47,7 +47,6 @@ public enum HashGameMap implements GameMap {
 		 */
 		Element e=elements.get(pos);
 		p.moveTo(pos);
-		System.out.println("Player "+p+ " goes from "+p.getLastPos()+" to "+pos);
 		if (e==null) {
 			return p.getCurrPos(); //empty position
 		}
@@ -90,7 +89,6 @@ public enum HashGameMap implements GameMap {
 		int x=player+1;
 		sb.append("Tocca al giocatore "+x+" in posizione "+p.getCurrPos()+'\n');
 		if(p.getRoundsToWait()!=0) {
-			System.out.println(p+" must wait "+p.getRoundsToWait()+" rounds to play");
 			sb.append(p+" deve attendere ancora "+p.getRoundsToWait()+" giri per giocare."+'\n');
 			p.setRoundsToWait(p.getRoundsToWait()-1);
 			return sb.toString();
@@ -212,8 +210,5 @@ public enum HashGameMap implements GameMap {
 	@Override
 	public int getnDaces() {
 		return nDaces;
-	}
-	
-	
-	
+	}	
 }

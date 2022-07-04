@@ -65,9 +65,4 @@ public class MapPanel extends JPanel {
 	public Box[] getBoxes() {
 		return boxes;
 	}
-
-	
-	
-	
-
 }

@@ -360,7 +360,7 @@ public class StartFrame extends JFrame {
 			do {
 				try {
 					String s=JOptionPane.showInputDialog("Inserisci le posizioni di "+element+
-							"separate da spazi.").trim();
+							" separate da spazi.").trim();
 					String[] a =s.split(" ");
 					if(a.length!=len)
 						throw new IllegalArgumentException("Length mismatch.");
@@ -368,6 +368,7 @@ public class StartFrame extends JFrame {
 					int[] pos=new int[len];
 					for(int i=0; i<len; i++) {
 						pos[i]=Integer.parseInt(a[i]);
+						if(pos[i]<=0 || pos[i]>nRows*nCols) throw new IllegalArgumentException("Enter valid values!");
 						if(values.contains(pos[i]))throw new IllegalArgumentException("Values must be unique!");
 						values.add(pos[i]);
 					}
@@ -380,30 +381,8 @@ public class StartFrame extends JFrame {
 			}while(inError);
 			return null;
 		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			
-			nPlayers=getQuantity(fieldPlayers.getText());
-			nRows=getQuantity(fieldRows.getText());
-			nCols=getQuantity(fieldColumns.getText());
-			nSnakes=getQuantity(fieldSnakes.getText());
-			nLadders=getQuantity(fieldLadders.getText());
-			nSprings=getQuantity(fieldSpring.getText());
-			nCards=getQuantity(fieldCards.getText());
-			nBenches=getQuantity(fieldBench.getText());
-			nRests=getQuantity(fieldRest.getText());
-			nDaceBoxes=getQuantity(fieldDace.getText());
-			
-			nDaces=Integer.parseInt((String)dacesComboBox.getSelectedItem());
-			
-			int elementsNumber=(nSnakes+nLadders)*2+nSprings+nCards+nBenches+nRests+nDaceBoxes;
-			
-			if(elementsNumber> nRows*nCols) {
-				JOptionPane.showMessageDialog(rootPane, "La mappa non può contenere tutti questi elementi!");
-				return;
-			}
-			
+		
+		private void construct() {
 			builder=new Builder();
 			builder.buildSpace(nRows, nCols);
 			builder.buildDaces(nDaces);
@@ -515,6 +494,32 @@ public class StartFrame extends JFrame {
 			if(doubleSix.isSelected()) builder.buildDoubleSix();
 			
 			openMainFrame(builder.getGameMap());
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			nPlayers=getQuantity(fieldPlayers.getText());
+			nRows=getQuantity(fieldRows.getText());
+			nCols=getQuantity(fieldColumns.getText());
+			nSnakes=getQuantity(fieldSnakes.getText());
+			nLadders=getQuantity(fieldLadders.getText());
+			nSprings=getQuantity(fieldSpring.getText());
+			nCards=getQuantity(fieldCards.getText());
+			nBenches=getQuantity(fieldBench.getText());
+			nRests=getQuantity(fieldRest.getText());
+			nDaceBoxes=getQuantity(fieldDace.getText());
+			
+			nDaces=Integer.parseInt((String)dacesComboBox.getSelectedItem());
+			
+			int elementsNumber=(nSnakes+nLadders)*2+nSprings+nCards+nBenches+nRests+nDaceBoxes;
+			
+			if(elementsNumber> nRows*nCols) {
+				JOptionPane.showMessageDialog(rootPane, "La mappa non può contenere tutti questi elementi!");
+				return;
+			}
+			
+			construct();
 		}
 		
 	}

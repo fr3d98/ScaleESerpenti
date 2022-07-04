@@ -7,7 +7,6 @@ public enum DaceBoxes implements Element {
 
 	@Override
 	public int action(Player p, StringBuilder sb) {
-		System.out.println(p+" gets to throw daces!");
 		int q=p.throwDaces();
 		int pos=q+p.getCurrPos();
 		sb.append("Il giocatore lancia i dadi nuovamente ed ottiene "+q+'\n');
@@ -22,7 +21,6 @@ public enum DaceBoxes implements Element {
 			throw new IllegalArgumentException("Can't put in this position, already taken.");
 		this.pos=pos[0];
 		set.add(pos[0]);
-		System.out.println("DaceBox located in "+this.pos);
 	}
 
 	@Override

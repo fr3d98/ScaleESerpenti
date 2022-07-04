@@ -21,7 +21,6 @@ abstract class Mover implements Element, Serializable {
 			throw new IllegalArgumentException("Position already taken! Choose differently.");
 		this.setTop(top); this.setBottom(bottom);
 		set.add(top); set.add(bottom);
-		System.out.println("Mover located in top: "+top+ "and bottom: "+bottom);
 	}
 
 	public int getTop() {

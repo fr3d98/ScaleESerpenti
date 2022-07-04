@@ -22,7 +22,6 @@ public enum Daces implements Serializable{
 		if(N==1 || p.getCurrPos()>=(dimension-6))
 			ris= r.nextInt(6)+1;
 		else ris= r.nextInt(6)+r.nextInt(6)+2;
-		System.out.println(p+ " throws daces and gets "+ris);
 		return ris;
 	}
 

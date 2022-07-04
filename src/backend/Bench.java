@@ -23,11 +23,9 @@ public enum Bench implements Element{
 		if(p.hasNoStopCard()) {
 			p.noStopCardConsumed();
 			Deck.INSTANCE.putBackCard(Card.NOSTOP);
-			System.out.println(p+" has a no-stop card and keeps playing");
 			sb.append("Il giocatore ha una No-Stop card e continua a giocare.+'\n");
 		}else {
 			p.setRoundsToWait(1);
-			System.out.println(p+" must wait one round to play again.");
 			sb.append("Il giocatore deve attendere un turno."+'\n');
 		}
 		return p.getCurrPos();

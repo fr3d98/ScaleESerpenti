@@ -1,5 +1,5 @@
 # ScaleESerpenti
-IS-Poject
+IS-Project
 
 The application simulates the game "Snakes and Ladders" giving the possibility to set different game variations.
 
